@@ -1,0 +1,29 @@
+{
+    "explorerURI": "mongodb://Mercury:Dux7MYeVff8xhnLt@108.61.117.115:27017/?retryWrites=true&w=majority",
+   "dbName": "notifications",
+   "testnet_mercuryDb":{
+                 "user": "mercury",
+                 "host": "psql.mercurywallet.io",
+                 "database": "test7",
+                 "password": "3c6CJe4rg8My8j",
+                 "port": 5434
+            },
+    "testnet_mercuryAPI": "http://78.141.223.118:32452",
+     "testnet_statechains": "statechains_tests",
+    "testnet_transactions": "transactions_tests",
+    "testnet_batchtransfers": "batchtransfers_tests",
+     "mainnet_mercuryDb":{
+                 "user": "mercury",
+                 "host": "10.105.174.233",
+                 "database": "mercury",
+                 "password": "px3kdjRe5ex2pz",
+                 "port": 5432
+            },
+    "mainnet_mercuryAPI": "http://ye5bn5bmj4xqfmp7bzppseg6xedz6mvtdvp6lfk4ozf7syoxqkcxi3qd.onion",
+    "mainnet_statechains": "statechains",
+    "mainnet_transactions": "transactions",
+    "mainnet_batchtransfers": "batchtransfers"
+   }
+   
+   
+   

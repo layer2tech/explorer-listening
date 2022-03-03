@@ -16,3 +16,17 @@ spec:
       containers:
       - name: st-test-listen
         image: st-test-listen
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: st-test-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    bb: web
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 30001

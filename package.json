@@ -11,9 +11,9 @@
       "winston": "^3.6.0"
     },
     "scripts": {
-        "batch_test": "node batchtransfer_listener.js TESTNET" ,
+        "bt_test": "node batchtransfer_listener.js TESTNET" ,
         "st_test": "node statechains_transactions_listener.js TESTNET",
-        "batch": "node batchtransfer_listener.js" ,
+        "bt": "node batchtransfer_listener.js" ,
         "st": "node statechains_transactions_listener.js"
     }
   }

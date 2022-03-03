@@ -23,10 +23,10 @@ Install with [npm](https://www.npmjs.com/):
 ### Mainnet
 
 ```sh
-$ npm install && npm run batch
+$ npm install && npm run bt
 ```
 ### Testnet
 
 ```sh
-$ npm install && npm run batch_test
+$ npm install && npm run bt_test
 ```

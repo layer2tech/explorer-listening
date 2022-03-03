@@ -9,9 +9,9 @@
                  "port": 5434
             },
     "testnet_mercuryAPI": "http://78.141.223.118:32452",
-     "testnet_statechains": "statechains_tests",
-    "testnet_transactions": "transactions_tests",
-    "testnet_batchtransfers": "batchtransfers_tests",
+     "testnet_statechains": "statechains",
+    "testnet_transactions": "transactions",
+    "testnet_batchtransfers": "batchtransfers",
      "mainnet_mercuryDb":{
                  "user": "mercury",
                  "host": "10.105.174.233",

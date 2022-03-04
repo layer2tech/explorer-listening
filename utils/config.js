@@ -1,4 +1,4 @@
-const CONFIG = require('../settings.json')
+require('dotenv').config()
 
 module.exports = {
 	getConfig
@@ -15,31 +15,30 @@ function getArgsHasTestnet(){
 
 function getConfig(){
 	const testnet = getArgsHasTestnet()
-	// console.log('isTestnet?: ',testnet)
-	// console.log(CONFIG)
+
 	if(testnet){
 		console.log('setting testnet config')
 		let config = {
-			explorerURI: CONFIG.explorerURI,
-			mercuryAPI: CONFIG.testnet_mercuryAPI,
-			mercuryDb: CONFIG.testnet_mercuryDb,
-			dbName: CONFIG.dbName,
-			statechains: CONFIG.testnet_statechains,
-			transactions: CONFIG.testnet_transactions,
-			batchtransfers: CONFIG.testnet_batchtransfers
+			explorerURI: process.env.EXPLORER_URI,
+			mercuryAPI: process.env.TESTNET_MERCURY_API,
+			mercuryDb: process.env.TESTNET_MERCURY_DB,
+			dbName: process.env.DB_NAME,
+			statechains: process.env.TESTNET_STATECHAINS,
+			transactions: process.env.TESTNET_TRANSACTIONS,
+			batchtransfers: process.env.TESTNET_BATCH_TRANSFERS
 			}
 		return config
 	}
 	else{
-		console.log('Setting mainnet config')
+		console.log('Setting MAINNET config')
 		let config = {
-			explorerURI: CONFIG.explorerURI,
-			mercuryAPI: CONFIG.mainnet_mercuryAPI,
-			mercuryDb: CONFIG.mainnet_mercuryDb,
-			dbName: CONFIG.dbName,
-			statechains: CONFIG.mainnet_statechains,
-			transactions: CONFIG.mainnet_transactions,
-			batchtransfers: CONFIG.mainnet_batchtransfers
+			explorerURI: process.env.EXPLORER_URI,
+			mercuryAPI: process.env.MAINNET_MERCURY_API,
+			mercuryDb: process.env.MAINNET_MERCURY_DB,
+			dbName: process.env.DB_NAME,
+			statechains: process.env.MAINNET_STATECHAINS,
+			transactions: process.env.MAINNET_TRANSACTIONS,
+			batchtransfers: process.env.MAINNET_BATCH_TRANSFERS
 		}
 		return config
 	}

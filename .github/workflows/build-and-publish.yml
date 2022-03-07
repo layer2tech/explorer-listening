@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ./TestST.Dockerfile
+          context: ./test_st
           # Note: tags has to be all lower-case
           tags: |
             tomt333/listen_st_test:latest 
@@ -62,7 +62,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ./TestBT.Dockerfile
+          context: ./test_bt
           # Note: tags has to be all lower-case
           tags: |
             tomt333/listen_bt_test:latest 
@@ -94,7 +94,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ./MainST.Dockerfile
+          context: ./main_st
           # Note: tags has to be all lower-case
           tags: |
             tomt333/listen_st_main:latest 
@@ -126,7 +126,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ./MainBT.Dockerfile
+          context: ./main_bt
           # Note: tags has to be all lower-case
           tags: |
             tomt333/listen_bt_main:latest 

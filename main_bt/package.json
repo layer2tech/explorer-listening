@@ -1,0 +1,21 @@
+{
+  "version": "v0.1.0",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "bech32": "^2.0.0",
+    "dotenv": "^16.0.0",
+    "geoip-country": "^4.0.108",
+    "i18n-iso-countries": "^7.3.0",
+    "mongodb": "^4.1.4",
+    "path": "^0.12.7",
+    "pg": "^8.7.1",
+    "tor-axios": "^1.0.9",
+    "winston": "^3.6.0"
+  },
+  "scripts": {
+    "bt_test": "node batchtransfer_listener.js TESTNET",
+    "st_test": "node statechains_transactions_listener.js TESTNET",
+    "bt": "node batchtransfer_listener.js",
+    "st": "node statechains_transactions_listener.js"
+  }
+}

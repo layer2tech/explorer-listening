@@ -4,11 +4,20 @@ const { functionOnDBs } = require('./utils/dbConnection.js')
 const { STMigration } = require('./utils/st_utils.js')
 const {getConfig} = require('./utils/config.js')
 
-// mongodb config
+const libraryNotFound = (lib) => {
+	if(lib === undefined || lib === null){
+		throw Error(`${lib} not found`);
+	}
+}
+
 var MongoClient = require('mongodb').MongoClient;
+libraryNotFound(MongoClient);
+
 const pg =  require('pg');
+libraryNotFound(pg);
 
 const CONFIG = getConfig()
+libraryNotFound(CONFIG);
 
 functionOnDBs( STMigration )
 
@@ -18,6 +27,8 @@ var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client)
     console.log(err);
   }
 
+  // debug what client is
+  console.log(client);
   
   //LISTEN to statechain table
   var query = client.query("LISTEN statechain_changed")

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bt-test-listen
+  name: st-test-listen
   namespace: default
 spec:
   replicas: 1
@@ -14,19 +14,30 @@ spec:
         bb: web
     spec:
       containers:
-      - name: bt-test-listen
-        image: bt-test-listen
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: bt-test-entrypoint
-  namespace: default
-spec:
-  type: NodePort
-  selector:
-    bb: web
-  ports:
-  - port: 3000
-    targetPort: 3000
-    nodePort: 30001
+      - name: st-test-listen
+        image: tomt333/listen_st_test:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: EXPLORER_URI
+          value: "mongodb://Mercury:Dux7MYeVff8xhnLt@108.61.117.115:27017/?retryWrites=true&w=majority"
+        - name: TESTNET_MERCURY_API
+          value: "http://78.141.223.118:32452"
+        - name: TEST_MERCURY_DB_USER
+          value: "mercury"
+        - name: TEST_MERCURY_DB_HOST
+          value: "45.63.42.2"
+        - name: TEST_MERCURY_DB_NAME
+          value: "test7"
+        - name: TEST_MERCURY_DB_PASS
+          value: "3c6CJe4rg8My8j"
+        - name: TEST_MERCURY_DB_PORT
+          value: "5434"
+        - name: DB_NAME
+          value: "notifications"
+        - name: TESTNET_STATECHAINS
+          value: "statechains_tests"
+        - name: TESTNET_TRANSACTIONS
+          value: "transactions_tests"
+        - name: TESTNET_BATCH_TRANSFERS
+          value: "batchtransfers_tests"

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: st-test-listen
+  name: bt-test-listen
   namespace: default
 spec:
   replicas: 1
@@ -14,8 +14,8 @@ spec:
         bb: web
     spec:
       containers:
-      - name: st-test-listen
-        image: tomt333/listen_st_test:latest
+      - name: bt-test-listen
+        image: tomt333/listen_bt_test:latest
         ports:
         - containerPort: 3000
         env:
@@ -26,7 +26,7 @@ spec:
         - name: TEST_MERCURY_DB_USER
           value: "mercury"
         - name: TEST_MERCURY_DB_HOST
-          value: "45.63.42.2"
+          value: "psql.mercurywallet.io"
         - name: TEST_MERCURY_DB_NAME
           value: "test7"
         - name: TEST_MERCURY_DB_PASS

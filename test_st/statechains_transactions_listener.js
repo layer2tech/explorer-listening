@@ -4,7 +4,7 @@ const { functionOnDBs } = require('./utils/dbConnection.js')
 const { STMigration } = require('./utils/st_utils.js')
 const { getConfig } = require('./utils/config.js')
 
-const checkNotUndefined = () => {
+const checkNotUndefined = (lib) => {
 	if(lib === undefined || lib === null){
 		throw Error(`${lib} not found`);
 	}

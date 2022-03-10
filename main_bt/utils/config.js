@@ -1,7 +1,8 @@
 require('dotenv').config()
 
 module.exports = {
-	getConfig
+	getConfig,
+	getArgsHasTestnet
 }
 
 function getArgsHasTestnet(){

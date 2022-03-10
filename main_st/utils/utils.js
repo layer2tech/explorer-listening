@@ -152,7 +152,7 @@ function sortStatechainsTransactions(data){
             	} else{
                 // Add event DEPOSIT or TRANSFER
                 	var txid_vout = txBackup.input[0].previous_output
-                	var address = encodeSCEAddress(chain[chain.length-1].data, true)
+                	var address = encodeSCEAddress( chain[chain.length-1].data )
                 	amount = parseInt(item.amount)
                 	if(chain[0].next_state === null){
                 		var event = "DEPOSIT"

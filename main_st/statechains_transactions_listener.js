@@ -2,23 +2,13 @@ const { removeNullValues, encodeSCEAddress } = require('./utils/utils.js')
 const {  get, updateOne } = require('./utils/getReqs.js')
 const { functionOnDBs } = require('./utils/dbConnection.js')
 const { STMigration } = require('./utils/st_utils.js')
-const { getConfig } = require('./utils/config.js')
-
-const checkNotUndefined = () => {
-	if(lib === undefined || lib === null){
-		throw Error(`${lib} not found`);
-	}
-}
+const {getConfig} = require('./utils/config.js')
 
 // mongodb config
 var MongoClient = require('mongodb').MongoClient;
-checkNotUndefined(MongoClient);
-
 const pg =  require('pg');
-checkNotUndefined(pg);
 
-const CONFIG = getConfig();
-checkNotUndefined(CONFIG);
+const CONFIG = getConfig()
 
 functionOnDBs( STMigration )
 
@@ -28,7 +18,6 @@ var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client)
     console.log(err);
   }
 
-  console.log('client value is: ', client);
   
   //LISTEN to statechain table
   var query = client.query("LISTEN statechain_changed")
@@ -116,3 +105,4 @@ var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client)
 
 	
 })
+		

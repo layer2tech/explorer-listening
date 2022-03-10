@@ -1,17 +1,20 @@
 const {  migrateBatchTransfers } = require('./utils')
-const { upsertMany } = require('./getReqs.js') 
+const { upsertMany } = require('./getReqs.js')
+const { getConfig } = require('./config.js')
 
 module.exports = {
 	BTMigration,
 	BTUpdate
 }
 
+const CONFIG = getConfig()
+
 async function BTMigration(client, db){
 	try{
   		const batch = await migrateBatchTransfers(client)
 		// Get data for migration
 		
-	  	await upsertMany(db,"notifications","batchtransfers_tests", "batch_id", batch)
+	  	await upsertMany(db,CONFIG.dbName,CONFIG.batchtransfers, "batch_id", batch)
 	  	// Update/Insert data
   	}
   	catch(err){
@@ -35,7 +38,7 @@ async function BTUpdate(msg, client, db){
 			
   		if(batchtransfer.finalized){
   			// Enter new batch transfer entry
-               	await insertOne(db, "test", "batchtransfers", batchTransferEntry, true)
+               	await insertOne(db, CONFIG.dbName, "batchtransfers", batchTransferEntry, true)
                     		
 		}
   						

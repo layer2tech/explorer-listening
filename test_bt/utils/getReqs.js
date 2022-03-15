@@ -8,26 +8,34 @@ module.exports = {
 	deleteAll
 }
 
+const TIMEOUT = 20000
+
 const getDbSchema = (db, schema) => {
     var dbSchema = db.db(schema);
     return dbSchema
 }
 
-async function get (endpoint, path, params){
+async function get (endpoint, path, params, timeout_ms = TIMEOUT){
     try {
-      const url = endpoint + "/" + (path + (Object.entries(params).length === 0 ? "" : "/" + params)).replace(/^\/+/, '');
+        const url = endpoint + "/" + (path + (Object.entries(params).length === 0 ? "" : "/" + params)).replace(/^\/+/, '');
 
-      let res = await axios.get(url)
+        const config = {
+            method: 'get',
+            url: url,
+            headers: { 'Accept': 'application/json' },
+            timeout: timeout_ms
+        }
 
-      let return_data = res.data
+        let res = await axios.get(config)
 
-      return return_data
+        let return_data = res.data
+
+        return return_data
 
     } catch (err) {
       throw err;
     }
 }
-
 
 async function insertOne (db, schema, collectionName, newEntry, close = false ) {
     // MongoDB insert newEntry

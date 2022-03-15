@@ -26,7 +26,7 @@ async function get (endpoint, path, params, timeout_ms = TIMEOUT){
             timeout: timeout_ms
         }
 
-        let res = await axios.get(config)
+        let res = await axios(config)
 
         let return_data = res.data
 

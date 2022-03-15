@@ -26,7 +26,7 @@ async function get (endpoint, path, params, timeout_ms = TIMEOUT){
             timeout: timeout_ms
         }
 
-        let res = await axios.get(config)
+        let res = await axios(config)
 
         let return_data = res.data
 
@@ -36,6 +36,7 @@ async function get (endpoint, path, params, timeout_ms = TIMEOUT){
       throw err;
     }
 }
+
 
 async function insertOne (db, schema, collectionName, newEntry, close = false ) {
     // MongoDB insert newEntry

@@ -1,5 +1,5 @@
-const { bech32 } = require('bech32')
-const { getArgsHasTestnet } = require('./config.js')
+const { bech32 } = require('bech32');
+const { getArgsHasTestnet } = require('./config.js');
 
 module.exports = {
 	encodeSCEAddress,
@@ -27,7 +27,7 @@ const getDbSchema = (db, schema) => {
     return dbSchema
 }
 
-function encodeSCEAddress(proof_key, testnet = false){
+function encodeSCEAddress(proof_key){
 	if(proof_key.substring(0,2) === 'tb' || proof_key.substring(0,2)=== 'bc'){
 		return proof_key
 	}
@@ -153,7 +153,7 @@ function sortStatechainsTransactions(data){
             	} else{
                 // Add event DEPOSIT or TRANSFER
                 	var txid_vout = txBackup.input[0].previous_output
-                	var address = encodeSCEAddress(chain[chain.length-1].data)
+                	var address = encodeSCEAddress(chain[chain.length-1].data, true)
                 	amount = parseInt(item.amount)
                 	if(chain[0].next_state === null){
                 		var event = "DEPOSIT"

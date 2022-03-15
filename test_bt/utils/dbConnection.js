@@ -14,7 +14,6 @@ const CONFIG = getConfig()
 async function functionOnDBs( dbFunction ){
 // dbFunction: type: async function - function on db that accepts client & db as args
 	var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client) {
-  		console.log("Connected to pg!")
  		if(err) {
     		console.log(err);
   		}

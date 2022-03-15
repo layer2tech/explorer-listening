@@ -21,7 +21,7 @@ async function get (endpoint, path, params, timeout_ms = TIMEOUT){
 
         const config = {
             method: 'get',
-            url: url,
+            url: `${url}`,
             headers: { 'Accept': 'application/json' },
             timeout: timeout_ms
         }

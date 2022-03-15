@@ -12,6 +12,7 @@ const CONFIG = getConfig()
 
 functionOnDBs(BTMigration)
 
+console.log("config: ".CONFIG)
 
 var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client) {
   console.log("Connected to pg!")

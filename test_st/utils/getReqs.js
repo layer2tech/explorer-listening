@@ -15,15 +15,14 @@ const getDbSchema = (db, schema) => {
     return dbSchema
 }
 
-async function get (endpoint, path, params, timeout_ms = TIMEOUT){
+async function get (endpoint, path, params){
     try {
         const url = endpoint + "/" + (path + (Object.entries(params).length === 0 ? "" : "/" + params)).replace(/^\/+/, '');
 
         const config = {
             method: 'get',
             url: `${url}`,
-            headers: { 'Accept': 'application/json' },
-            timeout: timeout_ms
+            headers: { 'Accept': 'application/json' }
         }
 
         let res = await axios(config)

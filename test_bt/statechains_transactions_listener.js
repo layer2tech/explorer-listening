@@ -22,8 +22,11 @@ checkNotUndefined(CONFIG);
 
 functionOnDBs( STMigration )
 
+console.log("config: ".CONFIG)
+
 var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client) {
   console.log("Connected to pg!")
+
   if(err) {
     console.log(err);
   }
@@ -65,7 +68,7 @@ var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client)
 				statechain_id: id,
 				txid_vout: statechain.utxo,
 				amount: statechain.amount,
-				address: statecoin?.statecoin?.data? encodeSCEAddress( statecoin.statecoin.data ) : null,
+				address: statecoin?.statecoin?.data? encodeSCEAddress(statecoin.statecoin.data) : null,
 				event: null,
 				locktime: statechain.locktime,
 				inserted_at: Date.now()

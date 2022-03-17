@@ -6,7 +6,11 @@ module.exports = {
 	isBTC,
 	removeNullValues,
 	getAllStatechainsTransactions,
+	getStatechainsTransactionsByID,
+	sortStatechainsTransactions,
 	getAllBatchTransfers,
+	getBatchTransferById,
+	sortBatchTransfers,
 	migrateBatchTransfers,
 	migrateMercuryDb
 }
@@ -96,12 +100,35 @@ async function getAllStatechainsTransactions(client){
         ON ${dbSC}.ownerid = ${dbUS}.id
         AND ${dbSC}.confirmed = true`)
 }
+async function getStatechainsTransactionsByID(client,id){
+    let dbSC = "statechainentity.statechain"
+    let dbUS = "statechainentity.usersession"
+    return await client.query(`SELECT ${dbSC}.id as statechain_id,
+        ${dbSC}.amount, 
+        ${dbSC}.lockeduntil as locktime,
+        ${dbSC}.chain,
+        ${dbSC}.confirmed,
+        ${dbUS}.txbackup,
+        ${dbUS}.txwithdraw 
+        FROM ${dbSC}
+        INNER JOIN ${dbUS} 
+        ON ${dbSC}.ownerid = ${dbUS}.id
+        AND ${dbSC}.confirmed = true
+		AND ${dbSC}.id = '${id}'`)
+}
 
 async function getAllBatchTransfers(client){
 
     return await client.query(`SELECT id as batch_id, statechains 
         FROM statechainentity.transferbatch
         WHERE finalized = true`)
+}
+
+async function getBatchTransferById(client, id){
+	return await client.query(`SELECT id as batch_id, statechains 
+		FROM statechainentity.transferbatch
+		WHERE finalized = true
+		AND id = '${id}'`)
 }
 
 function sortBatchTransfers(data){

@@ -1,4 +1,4 @@
-const { removeNullValues, encodeSCEAddress } = require('./utils/utils.js')
+const { removeNullValues, encodeSCEAddress, getStatechainsTransactionsByID, sortStatechainsTransactions } = require('./utils/utils.js')
 const {  get, updateOne } = require('./utils/getReqs.js')
 const { functionOnDBs } = require('./utils/dbConnection.js')
 const { STMigration } = require('./utils/st_utils.js')
@@ -30,7 +30,7 @@ var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client)
   if(err) {
     console.log(err);
   }
-
+  
   console.log('client value is: ', client);
   
   //LISTEN to statechain table
@@ -46,69 +46,29 @@ var client = new pg.Client(CONFIG.mercuryDb).connect(async function(err, client)
 		if(msg){
 			var id = JSON.parse(msg.payload).record
 			var operation = JSON.parse(msg.payload).operation
-
 		}
 		try{
-			console.log('This is the ID',id)
-			let statechain = await get(CONFIG.mercuryAPI,'info/statechain', id)
-			let statecoin = await get(CONFIG.mercuryAPI,'info/statecoin', id)
+			console.log('Statechain ID Record updated: ',id)
 
-			let statechainEntry = {
-				statechain_id: id,
-				txid_vout: statechain.utxo,
-				amount: statechain.amount,
-				chain: statechain.chain,
-				locktime: statechain.locktime,
-				confirmed: statechain.confirmed,
-				updated_at: Date.now(),
-			}
-			console.log('SC entry: ',statechain)		
+			console.log('Querying DB...')
+			let data = await getStatechainsTransactionsByID(client,id)
+			console.log('Sorting Data...')
+			const [txArray, scArray] = sortStatechainsTransactions(data.rows)
+			console.log('Inserting...')
 			
-			let transactionEntry = {
-				statechain_id: id,
-				txid_vout: statechain.utxo,
-				amount: statechain.amount,
-				address: statecoin?.statecoin?.data? encodeSCEAddress(statecoin.statecoin.data) : null,
-				event: null,
-				locktime: statechain.locktime,
-				inserted_at: Date.now()
-			}
-			console.log('transactionEntry: ', statecoin)
-			//add address
-			
-
-			//update already existing entry
+			// //update already existing entry
 			let idObj = {"statechain_id": id}
-			if(operation === "UPDATE" && statechainEntry.amount !== 0){
-				transactionEntry.event = "TRANSFER"
-			}
-			
-			if(statechainEntry.amount === 0 ){
-			
-				console.log('WITHDRAWAL IN ACTION AMOUNT IS 0')
-				transactionEntry.event = "WITHDRAWAL"
-				
-				// removing txid as they are incorrect on withdrawal
-				// update made via statechain id, txid doesn't change so no need to be updated
-				transactionEntry.txid_vout = null
-				transactionEntry.amount = null
-				
-				statechainEntry.txid_vout = null
-				statechainEntry.amount = null
-			}
-			if(operation === "INSERT"){
-				transactionEntry.event = "DEPOSIT"
-			}
-
-			statechainEntry = removeNullValues(statechainEntry)
-			transactionEntry = removeNullValues(transactionEntry)
-
-			console.log('submit sc : ', statechainEntry)
-			console.log('submit t :', transactionEntry)
 			
 
-			await updateOne(db,CONFIG.dbName,CONFIG.statechains, idObj, statechainEntry)
-			await updateOne(db, CONFIG.dbName, CONFIG.transactions, idObj, transactionEntry, true)	
+			if(scArray[0]){
+				console.log('INSERTED Statechains: ', scArray[0])
+				await updateOne(db,CONFIG.dbName,CONFIG.statechains, idObj, scArray[0])
+			}
+			if(txArray[0]){
+				console.log('INSERTED Transactions: ', txArray[0])
+				await updateOne(db, CONFIG.dbName, CONFIG.transactions, idObj, txArray[0], true)	
+			}
+			
   						
 		}
 		catch(err){

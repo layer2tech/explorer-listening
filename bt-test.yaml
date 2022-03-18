@@ -17,7 +17,7 @@ spec:
       - name: bt-test-listen
         image: tomt333/listen_bt_test:latest
         ports:
-        - containerPort: 3000
+        - containerPort: 3002
         env:
         - name: EXPLORER_URI
           value: "mongodb://Mercury:Dux7MYeVff8xhnLt@108.61.117.115:27017/?retryWrites=true&w=majority"

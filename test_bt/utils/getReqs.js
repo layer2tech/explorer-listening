@@ -84,13 +84,14 @@ async function upsertMany(db,schema,collectionName, idKey, data, closeDb = true)
 
 
 
-function deleteAll (db, schema, collectionName){
+async function deleteAll (db, schema, collectionName, closeDb = false){
     //update already existing entry
-    console.log('func called')
     var dbSchema = getDbSchema(db,schema)
     dbSchema.collection(collectionName).deleteMany( {} , function(err, res) {
         if (err) throw err;
         console.log("documents deleted");
-        db.close();
+        if(closeDb){
+            db.close();
+        }
     });
 }

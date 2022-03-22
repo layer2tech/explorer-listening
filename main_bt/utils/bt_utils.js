@@ -1,5 +1,5 @@
 const {  migrateBatchTransfers } = require('./utils')
-const { upsertMany } = require('./getReqs.js')
+const { upsertMany, deleteAll } = require('./getReqs.js')
 const { getConfig } = require('./config.js')
 
 module.exports = {
@@ -11,6 +11,9 @@ const CONFIG = getConfig()
 
 async function BTMigration(client, db){
 	try{
+		// wipe DB before migration
+		await deleteAll(db, CONFIG.dbName, CONFIG.batchtransfers)
+
   		const batch = await migrateBatchTransfers(client)
 		// Get data for migration
 		

@@ -165,17 +165,23 @@ function sortStatechainsTransactions(data){
         	if(item.txwithdraw){
         		let txWithdraw = JSON.parse(item.txwithdraw)
         		var event = "WITHDRAWAL"
-        	        var txid_vout = txWithdraw.input[0].previous_output
+        	    var txid_vout = txWithdraw.input[0].previous_output
         		var address = chain[chain.length - 1].data
-                	amount = 0
 
-                	txBackup.output.map(output => { 	
-                		amount += output.value 
-                	})
+				if(address.slice(0,2).includes('03') || address.slice(0,2).includes('02') ){
+					address = encodeSCEAddress(address)
+					// If TxWithdraw exists but bitcoin address not yet available
+				}
+
+                amount = 0
+
+                txBackup.output.map(output => { 	
+                	amount += output.value 
+                })
                 	
-                	// Output total fee
-                	amount += 141
-                	// Add withdrawal fee
+                // Output total fee
+                amount += 141
+                // Add withdrawal fee
 
             	} else{
                 // Add event DEPOSIT or TRANSFER

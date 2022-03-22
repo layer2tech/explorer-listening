@@ -1,5 +1,5 @@
 const {  migrateMercuryDb } = require('./utils')
-const { upsertMany } = require('./getReqs.js')
+const { upsertMany, deleteAll } = require('./getReqs.js')
 const { getConfig } = require('./config.js')
 
 module.exports = {
@@ -10,6 +10,10 @@ const CONFIG = getConfig()
 
 async function STMigration( client, db ){
 	try{
+		// Wipe DBs before migration
+		await deleteAll(db, CONFIG.dbName, CONFIG.statechains)
+		await deleteAll(db, CONFIG.dbName, CONFIG.transactions)
+
   		const [txArray, scArray] = await migrateMercuryDb(client)
 		// Get data for migration
 	  	await upsertMany(db,CONFIG.dbName,CONFIG.statechains, "statechain_id", scArray, false)
@@ -20,3 +24,5 @@ async function STMigration( client, db ){
   		console.log('Error in migration: ',err)
   	}
 }
+
+

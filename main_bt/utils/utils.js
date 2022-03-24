@@ -125,7 +125,7 @@ async function getAllBatchTransfers(client){
 }
 
 async function getBatchTransferById(client, id){
-	return await client.query(`SELECT id as batch_id, statechains 
+	return await client.query(`SELECT id as batch_id, statechains, starttime 
 		FROM statechainentity.transferbatch
 		WHERE finalized = true
 		AND id = '${id}'`)

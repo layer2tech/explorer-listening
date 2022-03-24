@@ -119,7 +119,7 @@ async function getStatechainsTransactionsByID(client,id){
 
 async function getAllBatchTransfers(client){
 
-    return await client.query(`SELECT id as batch_id, statechains 
+    return await client.query(`SELECT id as batch_id, statechains, starttime 
         FROM statechainentity.transferbatch
         WHERE finalized = true`)
 }
@@ -138,7 +138,7 @@ function sortBatchTransfers(data){
 		btArray.push({
 			batch_id: item.batch_id,
 			statechains: JSON.parse(item.statechains),
-			finalized_at: Date.now()
+			finalized_at: item.starttime
 		})
 	})
 	

@@ -46,7 +46,8 @@ function getConfig(){
 				"host": process.env.MERCURY_DB_HOST,
 				"database": process.env.MERCURY_DB_NAME,
 				"password": process.env.MERCURY_DB_PASS,
-				"port": process.env.MERCURY_DB_PORT
+				"port": process.env.MERCURY_DB_PORT,
+				"ssl": true
 		   },
 			dbName: process.env.DB_NAME,
 			statechains: process.env.MAINNET_STATECHAINS,
